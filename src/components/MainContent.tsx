@@ -1,13 +1,17 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Dashboard from './Dashboard';
+import Users from './Users';
+import Invoices from './Invoices';
 
 const MainContent: React.FC = () => {
   return (
-    <div className="flex-1 p-6">
-      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Welcome, Admin!</h2>
-        <p className="text-gray-700">Here you can manage users, view invoices, and perform other administrative tasks.</p>
-      </div>
+    <div className="flex-1 p-6 overflow-y-auto">
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/invoices" element={<Invoices />} />
+      </Routes>
     </div>
   );
 };

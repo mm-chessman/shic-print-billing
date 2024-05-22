@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
-import LoginPage from './components/LoginPage';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AdminPanel from './components/AdminPanel';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <LoginPage />
-    </div>
+    <Router>
+      <div className="App">
+        <AdminPanel />
+      </div>
+    </Router>
   );
 };
 
