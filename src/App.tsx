@@ -1,13 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginPage from './components/LoginPage';
 import AdminPanel from './components/AdminPanel';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="App">
-        <AdminPanel />
-      </div>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
+      </Routes>
     </Router>
   );
 };
