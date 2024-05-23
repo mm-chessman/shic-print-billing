@@ -11,9 +11,9 @@ const AdminPanel: React.FC = () => {
       <Sidebar />
       <div className="flex-1 p-6">
         <Routes>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/invoices" element={<Invoices />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/invoices" element={<Invoices />} />
         </Routes>
       </div>
     </div>
