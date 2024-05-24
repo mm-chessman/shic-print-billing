@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
@@ -32,8 +35,18 @@ const Dashboard: React.FC = () => {
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Quick Actions</h2>
         <div className="flex space-x-4">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Add User</button>
-          <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">Create Invoice</button>
+          <button
+            onClick={() => navigate('/admin/add-user')}
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+          >
+            Add User
+          </button>
+          <button
+            onClick={() => navigate('/admin/create-invoice')}
+            className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+          >
+            Create Invoice
+          </button>
         </div>
       </div>
     </div>

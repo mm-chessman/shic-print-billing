@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import Users from './Users';
 import Invoices from './Invoices';
+import AddUser from './AddUser';
 
 const AdminPanel: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const AdminPanel: React.FC = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/invoices" element={<Invoices />} />
+          <Route path="/add-user" element={<AddUser />} />
         </Routes>
       </div>
     </div>
