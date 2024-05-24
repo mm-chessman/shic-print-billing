@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 const AddUser: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
+    const [id, setId] = useState('');
+    const [name, setName] = useState('');
     const [message, setMessage] = useState('');
 
     const handleAddUser = async () => {
-        const newUser = { username, email };
+        const newUser = { id, name };
 
         try {
-            const response = await fetch('http://localhost:5000/add-user', {
+            const response = await fetch('https://8d2bef02-5170-441c-82c1-00571422b3d7-00-1676bxo36y4w5.pike.replit.dev/add-user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -19,8 +19,8 @@ const AddUser: React.FC = () => {
 
             if (response.ok) {
                 setMessage('User added successfully');
-                setUsername('');
-                setEmail('');
+                setId('');
+                setName('');
             } else {
                 const errorData = await response.json();
                 setMessage('Failed to add user: ' + errorData.message);
@@ -35,25 +35,25 @@ const AddUser: React.FC = () => {
             <h2 className="text-2xl font-semibold mb-4">Add User</h2>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                    Username
+                    ID
                 </label>
                 <input
-                    id="username"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    id="id"
+                    type="number"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
             </div>
             <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                    Email
+                    Name
                 </label>
                 <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
             </div>
