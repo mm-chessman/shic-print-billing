@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import Users from './Users';
 import Invoices from './Invoices';
-import AddUser from './AddUser';
+import User from './User';
 
 const AdminPanel: React.FC = () => {
   return (
@@ -14,8 +14,9 @@ const AdminPanel: React.FC = () => {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/user/:id" element={<User />} />
           <Route path="/invoices" element={<Invoices />} />
-          <Route path="/add-user" element={<AddUser />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -25,7 +26,23 @@ const Users: React.FC = () => {
       });
   }, []);
 
-  const handleEditUser = async (id: string) => {
+  const deleteUser = async (id: string) => {
+    try {
+      const response = await fetch(`https://8d2bef02-5170-441c-82c1-00571422b3d7-00-1676bxo36y4w5.pike.replit.dev/api/users/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setUsers(users.filter(user => user.id !== id));
+      } else {
+        console.error('Failed to delete user');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
+  const editUser = async (id: string) => {
     const newName = prompt('Enter new name for user:');
     if (newName) {
       try {
@@ -45,15 +62,6 @@ const Users: React.FC = () => {
       } catch (error) {
         console.error('Error updating user:', error);
       }
-    }
-  };
-  
-
-  const handleDeleteUser = (id: string) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this user?');
-    if (confirmDelete) {
-      const updatedUsers = users.filter(user => user.id !== id);
-      setUsers(updatedUsers);
     }
   };
 
@@ -81,14 +89,24 @@ const Users: React.FC = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {users.map(user => (
                   <tr key={user.id} className="hover:bg-gray-100 transition-colors">
-                    <td className="py-4 px-6 text-sm font-medium text-gray-900">{user.id}</td>
+                    <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                      <Link to={`/admin/user/${user.id}`} className="text-blue-500 hover:underline">
+                        {user.id}
+                      </Link>
+                    </td>
                     <td className="py-4 px-6 text-sm text-gray-500">{user.name}</td>
-                    <td className="py-4 px-6 flex space-x-2">
-                      <button className="text-blue-500 hover:text-blue-700" onClick={() => handleEditUser(user.id)}>
-                        <FiEdit />
+                    <td className="py-4 px-6 text-sm text-gray-500">
+                      <button
+                        className="text-blue-500 hover:text-blue-700 mr-4"
+                        onClick={() => editUser(user.id)}
+                      >
+                        <FaEdit />
                       </button>
-                      <button className="text-red-500 hover:text-red-700" onClick={() => handleDeleteUser(user.id)}>
-                        <FiTrash2 />
+                      <button
+                        className="text-red-500 hover:text-red-700"
+                        onClick={() => deleteUser(user.id)}
+                      >
+                        <FaTrash />
                       </button>
                     </td>
                   </tr>
