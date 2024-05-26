@@ -32,14 +32,6 @@ const Sidebar: React.FC = () => {
         >
           <FaUserPlus className="inline mr-2" /> Add User
         </NavLink>
-        <NavLink 
-          to="/admin/invoices" 
-          className={({ isActive }) => 
-            `block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white ${isActive ? 'bg-gray-700' : ''}`
-          }
-        >
-          <FaFileInvoice className="inline mr-2" /> Invoices
-        </NavLink>
       </nav>
     </div>
   );

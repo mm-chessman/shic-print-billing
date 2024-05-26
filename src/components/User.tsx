@@ -7,10 +7,10 @@ const User: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [newDebt, setNewDebt] = useState<any>({
-    page: '',
-    type: '',
-    count: 0,
-    amount: 0,
+    page: 'A4',
+    type: 'one-sided',
+    count: 1,
+    amount: 2,
     date: '',
   });
   const [newCredit, setNewCredit] = useState<number>(0);
@@ -29,8 +29,20 @@ const User: React.FC = () => {
       });
   }, [id]);
 
+  const calculateAmount = (page: string, type: string, count: number) => {
+    const pageValue = page === 'A4' ? 1 : page === 'A5' ? 0.5 : 2;
+    const typeValue = type === 'one-sided' ? 1.5 : type === 'two-sided' ? 2 : 3;
+    var toAdd = pageValue * typeValue > 1 ? 0.5 : 0.25;
+    return (pageValue * typeValue + toAdd) * count;
+  };
+
   const handleNewDebtChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setNewDebt({ ...newDebt, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setNewDebt((prevDebt:any) => {
+      const updatedDebt = { ...prevDebt, [name]: value };
+      const newAmount = calculateAmount(updatedDebt.page, updatedDebt.type, updatedDebt.count);
+      return { ...updatedDebt, amount: newAmount };
+    });
   };
 
   const handleNewCreditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +71,7 @@ const User: React.FC = () => {
             transactions: updatedTransactions,
           };
         });
-        setNewDebt({ page: '', type: '', count: 0, amount: 0 });
+        setNewDebt({ page: 'A4', type: 'one-sided', count: 1, amount: 2 });
       } else {
         console.error('Failed to add new debt');
       }
@@ -107,6 +119,8 @@ const User: React.FC = () => {
     return <p className="text-red-500">{error}</p>;
   }
 
+  var total: number = 0;
+
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold mb-4">User Details</h1>
@@ -120,27 +134,27 @@ const User: React.FC = () => {
         <form onSubmit={handleNewDebtSubmit} className="mt-4 grid gap-3 grid-cols-5 place-items-stretch">
           <div className='w-full h-20'>
             <label className="block mt-2 mb-2">Page:</label>
-            <select name="page" value={newDebt.page} onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              <option value="A4">A4</option>
-              <option value="A5">A5</option>
-              <option value="A3">A3</option>
+            <select id='page' name="page" value={newDebt.page} onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+              <option data-page="2" value="A4">A4</option>
+              <option data-page="1" value="A5">A5</option>
+              <option data-page="3" value="A3">A3</option>
             </select>
           </div>
           <div className='w-full h-20'>
             <label className="block mt-2 mb-2">Type:</label>
-            <select name="type" value={newDebt.type} onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              <option value="one-sided">One-Sided</option>
-              <option value="two-sided">Two-Sided</option>
-              <option value="booklet">Booklet</option>
+            <select id='type' name="type" value={newDebt.type} onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+              <option data-type="1" value="one-sided">One-Sided</option>
+              <option data-type="2" value="two-sided">Two-Sided</option>
+              <option data-type="3" value="booklet">Booklet</option>
             </select>
           </div>
           <div className='w-full h-20'>
-          <label className="block mt-2 mb-2">Count:</label>
-          <input type="number" name="count" value={newDebt.count} onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+            <label className="block mt-2 mb-2">Count:</label>
+            <input id='count' type="number" name="count" value={newDebt.count} min="1" onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className='w-full h-20'>
-          <label className="block mt-2 mb-2">Amount:</label>
-          <input type="number" name="amount" value={newDebt.amount} onChange={handleNewDebtChange} className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+            <label className="block mt-2 mb-2">Amount:</label>
+            <input id='amount' type="number" name="amount" readOnly value={newDebt.amount} min="1" className="block w-full border-gray-300 rounded-md shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <button type="submit" className="w-full mt-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Add</button>
         </form>
@@ -159,16 +173,28 @@ const User: React.FC = () => {
           </thead>
           <tbody>
             {user.transactions.map((transaction: any, index: number) => (
-              <tr key={index} className="border-t">
-                <td className="px-4 py-2">{transaction.count ? 'Debt' : 'Credit'}</td>
-                <td className="px-4 py-2">{transaction.page || 'N/A'}</td>
-                <td className="px-4 py-2">{transaction.type || 'N/A'}</td>
-                <td className={`px-4 py-2 ${transaction.count ? 'text-red-500' : 'text-green-500'}`}>
-                  {transaction.amount}
-                </td>
-                <td className="px-4 py-2">{transaction.date}</td>
-              </tr>
+              <>
+                <tr key={index} className={`border-t ${transaction.count ? 'text-red-500' : 'text-green-500'}`}>
+                  <td className="px-4 py-2">{transaction.count ? 'Debt' : 'Credit'}</td>
+                  <td className="px-4 py-2">{transaction.page || 'N/A'}</td>
+                  <td className="px-4 py-2">{transaction.type || 'N/A'}</td>
+                  <td className="px-4 py-2">
+                    {transaction.amount}
+                  </td>
+                  <td className="px-4 py-2">{transaction.date}</td>
+                </tr>
+                <tr key={index} hidden>
+                  {transaction.count ? (total -= Number(transaction.amount)) : (total += Number(transaction.amount))}
+                </tr>
+              </>
             ))}
+            <tr className={`border-t ${total < 0 ? 'text-red-500' : 'text-green-500'}`}>
+              <td className="px-4 py-2 font-bold text-xl">Total</td>
+              <td className="px-4 py-2"></td>
+              <td className="px-4 py-2"></td>
+              <td className="px-4 py-2 font-bold text-xl">{total}</td>
+              <td className="px-4 py-2"></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -176,12 +202,12 @@ const User: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-4">Add Credit</h2>
         <form onSubmit={handleNewCreditSubmit} className="mt-4">
           <label className="block mb-2">Credit Amount:</label>
-          <input type="number" value={newCredit} onChange={handleNewCreditChange} className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <input type="number" value={newCredit} min="1" onChange={handleNewCreditChange} className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           <button type="submit" className="mt-2 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Add Credit</button>
         </form>
       </div>
       <Link to="/users" className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Back to Users</Link>
-    </div>
+    </div >
   );
 };
 
