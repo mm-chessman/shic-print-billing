@@ -5,6 +5,7 @@ import Dashboard from './Dashboard';
 import Users from './Users';
 import User from './User';
 import AddUser from './AddUser';
+import GetUser from './GetUser';
 
 const AdminPanel: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const AdminPanel: React.FC = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/add-user" element={<AddUser />} />
+          <Route path="/get-user" element={<GetUser />} />
           <Route path="/user/:id" element={<User />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
