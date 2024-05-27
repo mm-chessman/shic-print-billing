@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const AddUser: React.FC = () => {
     const [id, setId] = useState('');
@@ -64,6 +65,14 @@ const AddUser: React.FC = () => {
                 Add User
             </button>
             {message && <p className="text-green-500 text-sm mt-4">{message}</p>}
+            <div className="mt-4">
+                <Link
+                    to="/admin/bulk-import-users"
+                    className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+                >
+                    Bulk Import Users
+                </Link>
+            </div>
         </div>
     );
 };

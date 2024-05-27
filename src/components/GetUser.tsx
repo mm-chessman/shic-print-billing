@@ -12,7 +12,7 @@ const GetUser: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold mb-6 text-center">Find User</h1>
-        <form className="space-y-4">
+        <form className="space-y-4" action={`/admin/user/${userId}`}>
           <div>
             <label htmlFor="userId" className="block text-sm font-medium text-gray-700">
               User ID
@@ -30,7 +30,7 @@ const GetUser: React.FC = () => {
           <div>
             <Link
               to={`/admin/user/${userId}`}
-              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${userId ? 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' : 'bg-gray-400 cursor-not-allowed'}`}
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${userId.length > 2 ? 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' : 'bg-gray-400 cursor-not-allowed'}`}
             >
               Go to User Page
             </Link>

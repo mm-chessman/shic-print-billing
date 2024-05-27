@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
@@ -7,20 +7,35 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('isLoggedIn');
+    if (isAuthenticated === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleLogin = async () => {
     const response = await fetch('/adminCredentials.json');
-    const credentials = await response.json();
+    const adminCredentials = await response.json();
 
-    if (username === credentials.username && password === credentials.password) {
+    const matchedAdmin = adminCredentials.find(
+      (admin: { username: string; password: string }) =>
+        admin.username === username && admin.password === password
+    );
+
+    if (matchedAdmin) {
       setError('');
       setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', 'true');
     } else {
       setError('Invalid username or password');
     }
   };
 
   return isLoggedIn ? (
-    <Navigate to="/admin" replace />
+    <>
+      <Navigate to="/admin" replace />
+    </>
   ) : (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-purple-600">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">

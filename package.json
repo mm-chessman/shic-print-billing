@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.24.6",
+    "@babel/preset-react": "^7.24.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,10 +13,12 @@
     "@types/node": "^16.18.97",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
+    "chart.js": "^4.4.3",
     "cores": "^0.8.5",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "react-router": "^6.23.1",
@@ -21,7 +26,8 @@
     "react-scripts": "^3.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "webpack": "^4.29.6"
+    "webpack": "^4.29.6",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
