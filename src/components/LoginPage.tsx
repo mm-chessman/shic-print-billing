@@ -32,11 +32,11 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  return isLoggedIn ? (
-    <>
-      <Navigate to="/admin" replace />
-    </>
-  ) : (
+  if (isLoggedIn) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-purple-600">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>

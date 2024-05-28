@@ -1,20 +1,18 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaHome, FaUsers, FaUserPlus, FaAddressCard, FaFileInvoice, FaPowerOff } from 'react-icons/fa';
 
 const Sidebar: React.FC = () => {
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
-    window.location.reload();
+    navigate('/');
   };
 
   return (
     <div className="fixed left-0 top-0 h-screen bg-gray-800 text-white w-64 space-y-6 py-7 px-2">
-      <button onClick={handleLogout} className='inline'>
-        <FaPowerOff className='inline mr-2 text-red-500 text-xl'/>
-        </button>
-      <h1 className="inline text-2xl font-bold text-center">SHIC Print Billing</h1>
+      <h1 className="text-2xl font-bold text-center">SHIC Print Billing</h1>
       <nav>
         <NavLink
           to="/admin"
@@ -65,6 +63,11 @@ const Sidebar: React.FC = () => {
         >
           <FaFileInvoice className="inline mr-2" /> Bulk Credits
         </NavLink>
+        <button
+        onClick={handleLogout}
+          className="text-red-500 block absolute bottom-0 py-2.5 pl-4 pr-36 rounded transition duration-200 hover:bg-red-500 hover:text-white">
+          <FaPowerOff className="inline mr-2" /> Logout
+        </button>
       </nav>
     </div>
   );

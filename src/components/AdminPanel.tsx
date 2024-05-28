@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
@@ -11,20 +11,22 @@ import BulkDebts from './BulkDebts';
 import BulkCredits from './BulkCredits';
 
 const AdminPanel: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('isLoggedIn');
-    if (isAuthenticated === 'true') {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    setIsLoggedIn(isAuthenticated === 'true');
   }, []);
 
-  return !isLoggedIn ? (
-    <Navigate to="/" replace />
-  ) : (
+  if (isLoggedIn === null) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
+
+  return (
     <div className="flex bg-gray-100">
       <Sidebar />
       <div className="flex-1 p-6 ml-64">
