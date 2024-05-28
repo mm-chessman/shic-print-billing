@@ -37,6 +37,9 @@ const Dashboard: React.FC = () => {
           }
         });
 
+        debts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        credits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
         setTotalUsers(userCount);
         setTotalDebts(debtSum);
         setTotalCredits(creditSum);
