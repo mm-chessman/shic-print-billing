@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaHome, FaUsers, FaUserPlus, FaAddressCard, FaFileInvoice, FaPowerOff } from 'react-icons/fa';
+import { FaHome, FaUsers, FaUserPlus, FaAddressCard, FaFileInvoice, FaPowerOff, FaCreditCard, FaRegCreditCard, FaFile } from 'react-icons/fa';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const Sidebar: React.FC = () => {
   return (
     <div className="fixed left-0 top-0 h-screen bg-gray-800 text-white w-64 space-y-6 py-7 px-2">
       <h1 className="text-2xl font-bold text-center">SHIC Print Billing</h1>
+      <h3 className='text-center'>By <span className='text-2 font-bold'>MM_CHESSMAN</span></h3>
       <nav>
         <NavLink
           to="/admin"
@@ -53,7 +54,7 @@ const Sidebar: React.FC = () => {
             `block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white ${isActive ? 'bg-gray-700' : ''}`
           }
         >
-          <FaFileInvoice className="inline mr-2" /> Bulk Debts
+          <FaCreditCard className="inline mr-2" /> Bulk Debts
         </NavLink>
         <NavLink
           to="/admin/bulk-credits"
@@ -61,7 +62,23 @@ const Sidebar: React.FC = () => {
             `block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white ${isActive ? 'bg-gray-700' : ''}`
           }
         >
-          <FaFileInvoice className="inline mr-2" /> Bulk Credits
+          <FaRegCreditCard className="inline mr-2" /> Bulk Credits
+        </NavLink>
+        <NavLink
+          to="/admin/students-transactions"
+          className={({ isActive }) =>
+            `block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white ${isActive ? 'bg-gray-700' : ''}`
+          }
+        >
+          <FaFile className="inline mr-2" /> Students Transactions
+        </NavLink>
+        <NavLink
+          to="/admin/complete-list"
+          className={({ isActive }) =>
+            `block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white ${isActive ? 'bg-gray-700' : ''}`
+          }
+        >
+          <FaFileInvoice className="inline mr-2" /> Complete Transactions
         </NavLink>
         <button
         onClick={handleLogout}

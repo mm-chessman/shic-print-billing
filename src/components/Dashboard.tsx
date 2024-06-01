@@ -78,6 +78,24 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
+          <div className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Quick Actions</h2>
+        <div className="flex space-x-4">
+          <Link
+            to="/admin/add-user"
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+          >
+            Add User
+          </Link>
+          <Link
+            to="/admin/get-user"
+            className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+          >
+            Get User
+          </Link>
+        </div>
+      </div>
+
           <div className="bg-white p-6 text-green-500 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-4">User Credits</h2>
             <ul className="space-y-4">
@@ -101,24 +119,6 @@ const Dashboard: React.FC = () => {
           </div>
         </>
       )}
-
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Quick Actions</h2>
-        <div className="flex space-x-4">
-          <Link
-            to="/admin/add-user"
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-          >
-            Add User
-          </Link>
-          <Link
-            to="/admin/get-user"
-            className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
-          >
-            Get User
-          </Link>
-        </div>
-      </div>
     </div>
   );
 };

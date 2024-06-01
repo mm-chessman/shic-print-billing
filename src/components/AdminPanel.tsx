@@ -9,6 +9,8 @@ import GetUser from './GetUser';
 import BulkImportUsers from './BulkImportUsers';
 import BulkDebts from './BulkDebts';
 import BulkCredits from './BulkCredits';
+import TransactionsPage from './TransactionsPage';
+import StudentsTransactions from './StudentsTransactions';
 
 const AdminPanel: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -19,7 +21,7 @@ const AdminPanel: React.FC = () => {
   }, []);
 
   if (isLoggedIn === null) {
-    return <div>Loading...</div>; // Or a loading spinner
+    return <div>Loading...</div>;
   }
 
   if (!isLoggedIn) {
@@ -39,6 +41,8 @@ const AdminPanel: React.FC = () => {
           <Route path="/user/:id" element={<User />} />
           <Route path="/bulk-debts" element={<BulkDebts />} />
           <Route path="/bulk-credits" element={<BulkCredits />} />
+          <Route path="/complete-list" element={<TransactionsPage />} />
+          <Route path="/students-transactions" element={<StudentsTransactions />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

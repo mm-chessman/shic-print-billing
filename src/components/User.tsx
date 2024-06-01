@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaPrint } from 'react-icons/fa';
 import { useParams, Link } from 'react-router-dom';
 
 const User: React.FC = () => {
@@ -116,6 +117,10 @@ const User: React.FC = () => {
     setUserId(e.target.value);
   };
 
+  const handlePrint = () => {
+    window.print();
+  }
+
   if (loading) {
     return <p className="text-gray-700">Loading user...</p>;
   }
@@ -129,15 +134,15 @@ const User: React.FC = () => {
   return (
     <div className="p-6 space-y-6">
       <form className="mr-12 mt-4 grid grid-cols-2 place-items-center absolute right-0" action={`/admin/user/${userId}`}>
-          <input
-            type="text"
-            id="userId"
-            value={userId}
-            onChange={handleInputChange}
-            className="h-11 block  px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Enter user ID"
-            required
-          />
+        <input
+          type="text"
+          id="userId"
+          value={userId}
+          onChange={handleInputChange}
+          className="h-11 block  px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter user ID"
+          required
+        />
         <div>
           <Link
             to={`/admin/user/${userId}`}
@@ -184,8 +189,17 @@ const User: React.FC = () => {
         </form>
       </div>
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
-        <table className="min-w-full">
+        <div className='flex justify-between items-center'>
+          <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
+          <button
+            onClick={handlePrint}
+            className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+          >
+            <FaPrint className="mr-2" />
+          Print
+          </button>
+        </div>
+        <table className="printableArea min-w-full">
           <thead>
             <tr>
               <th className="px-4 py-2">Type</th>
@@ -230,7 +244,7 @@ const User: React.FC = () => {
           <button type="submit" className="mt-2 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Add Credit</button>
         </form>
       </div>
-      <Link to="/users" className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Back to Users</Link>
+      <Link to="/admin/users" className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Back to Users</Link>
     </div >
   );
 };
