@@ -34,7 +34,7 @@ const User: React.FC = () => {
   const calculateAmount = (page: string, type: string, count: number) => {
     const pageValue = page === 'A4' ? 1 : page === 'A5' ? 0.5 : 2;
     const typeValue = type === 'one-sided' ? 1.5 : type === 'two-sided' ? 2 : 3;
-    var toAdd = pageValue * typeValue > 1 ? 0.5 : 0.25;
+    var toAdd = page === 'A5' && type === 'one-sided' ? 0.75 : page === 'A5' ? 1 : page === 'A4' ? 0.5 : 0;
     return (pageValue * typeValue + toAdd) * count;
   };
 
